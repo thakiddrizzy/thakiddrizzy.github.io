@@ -1,0 +1,147 @@
+// All valid credit card numbers
+const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
+const valid2 = [5, 5, 3, 5, 7, 6, 6, 7, 6, 8, 7, 5, 1, 4, 3, 9];
+const valid3 = [3, 7, 1, 6, 1, 2, 0, 1, 9, 9, 8, 5, 2, 3, 6];
+const valid4 = [6, 0, 1, 1, 1, 4, 4, 3, 4, 0, 6, 8, 2, 9, 0, 5];
+const valid5 = [4, 5, 3, 9, 4, 0, 4, 9, 6, 7, 8, 6, 9, 6, 6, 6];
+
+// All invalid credit card numbers
+const invalid1 = [4, 5, 3, 2, 7, 7, 8, 7, 7, 1, 0, 9, 1, 7, 9, 5];
+const invalid2 = [5, 7, 9, 5, 5, 9, 3, 3, 9, 2, 1, 3, 4, 6, 4, 3];
+const invalid3 = [3, 7, 5, 7, 9, 6, 0, 8, 4, 4, 5, 9, 9, 1, 4];
+const invalid4 = [6, 0, 1, 1, 1, 2, 7, 9, 6, 1, 7, 7, 7, 9, 3, 5];
+const invalid5 = [5, 3, 8, 2, 0, 1, 9, 7, 7, 2, 8, 8, 3, 8, 5, 4];
+
+// Can be either valid or invalid
+const mystery1 = [3, 4, 4, 8, 0, 1, 9, 6, 8, 3, 0, 5, 4, 1, 4];
+const mystery2 = [5, 4, 6, 6, 1, 0, 0, 8, 6, 1, 6, 2, 0, 2, 3, 9];
+const mystery3 = [6, 0, 1, 1, 3, 7, 7, 0, 2, 0, 9, 6, 2, 6, 5, 6, 2, 0, 3];
+const mystery4 = [4, 9, 2, 9, 8, 7, 7, 1, 6, 9, 2, 1, 7, 0, 9, 3];
+const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
+
+const mystery6 = [0, 6, 0, 4, 0, 2, 4, 1, 2, 2, 1, 8, 3, 6, 0, 1];
+const mystery7 = [3, 5, 3, 0, 3, 0, 9, 9, 9, 4, 5, 3, 7, 9, 2, 8, 5, 5, 3];
+const mystery8 = [5,3,7,4,1,1,6,1,2,9,7,3,3,3,8,3]
+const mystery9 = [9,9,6,3,2,4,8,1,2,1,3,4,2,6,5,4,8,6,5,1,2]
+const mystery10 = [0,1,0,0,9,1,2,6,4,3,4,2,7,6,5,1,3,5,8]
+
+// An array of all the arrays above
+const batch = [
+  valid1,
+  valid2,
+  valid3,
+  valid4,
+  valid5,
+  invalid1,
+  invalid2,
+  invalid3,
+  invalid4,
+  invalid5,
+  mystery1,
+  mystery2,
+  mystery3,
+  mystery4,
+  mystery5,
+  mystery6,
+  mystery7,
+  mystery8,
+  mystery9,
+  mystery10,
+];
+
+// DRAKE's ARRAY OF INVALID CARDS:
+
+// const badCards = [invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery3, mystery4]
+
+const validateCred = (arr) => {
+  let checkNum = arr.pop();
+  let emptyArray = [];
+  let ccSlice = arr.slice(0);
+  let reversedSlice = ccSlice.slice().reverse();
+
+  //debugging:
+  // console.log(reversedSlice);
+  // return;
+
+  reversedSlice.forEach((num, idx) => {
+    if (idx % 2 === 0) {
+      let newNum = num * 2;
+
+      if (newNum > 9) {
+        newNum = newNum - 9;
+      }
+      emptyArray.push(newNum);
+
+      //debugging:
+      // console.log(newNum);
+      // return;
+    } else {
+      emptyArray.push(num);
+    }
+  });
+  emptyArray.push(checkNum);
+
+  //debugging:
+  // console.log(emptyArray);
+  // return;
+
+  const sumWithInitial = emptyArray.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
+  if (sumWithInitial % 10 === 0) {
+    return true;
+  } else if (sumWithInitial % 10 !== 0) {
+    return false;
+  }
+};
+
+const findInvalidCards = (arr) => {
+  let validCards = [];
+  let invalidCards = [];
+
+  arr.forEach((element) => {
+    if (validateCred(element) === true) {
+      validCards.push(element);
+    } else {
+      invalidCards.push(element);
+    }
+  });
+
+    return invalidCards;
+};
+
+const idInvalidCardCompanies = (arr) => {
+  let badCards = findInvalidCards(arr);
+  let companiesWithBadCards = [];
+  badCards.forEach((card) => {
+    if (card[0] === 3) {
+      companiesWithBadCards.push("Amex");
+    } else if (card[0] === 4) {
+      companiesWithBadCards.push("Visa");
+    } else if (card[0] === 5) {
+      companiesWithBadCards.push("Mastercard");
+    } else if (card[0] === 6) {
+      companiesWithBadCards.push("Discover");
+    } else {
+      console.log("Company Not Found");
+    }
+  });
+  let scoundrels = companiesWithBadCards.filter((name, idx) => {
+    return companiesWithBadCards.indexOf(name) === idx;
+  });
+  return scoundrels;
+};
+
+//debugging / run function:
+console.log(idInvalidCardCompanies(batch));
+
+// console.log(validateCred(mystery10));
+//console.log(findInvalidCards(batch));
+
+
+
+//notes:
+// ive added some arrays additionally from the original project generated arrays to check and see if all my functions were working properly. 
+// most of the code i wrote with the exception of the initial function and some debugging assistance. 
