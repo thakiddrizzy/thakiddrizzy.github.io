@@ -1,0 +1,136 @@
+// Returns a random DNA base
+const returnRandBase = () => {
+  const dnaBases = ['A', 'T', 'C', 'G'];
+  return dnaBases[Math.floor(Math.random() * 4)];
+};
+
+const returnRandBase2 = (arr) => {
+    return Math.floor(Math.random() * arr.length);
+};
+
+// Returns a random single stand of DNA containing 15 bases
+const mockUpStrand = () => {
+  const newStrand = [];
+  for (let i = 0; i < 15; i++) {
+    newStrand.push(returnRandBase());
+  }
+  return newStrand;
+};
+
+let wawa2 =[  'A', 'A', 'T', 'T',
+'T', 'C', 'T', 'G',
+'T', 'G', 'G', 'G',
+'A', 'C', 'T']
+
+
+// function pAequorFactory(speciesNum, speciesDNA) {
+//   return {
+//     speciesNum: speciesNum,
+//     speciesDNA: speciesDNA,
+//     mutate () {
+//       let idx = returnRandBase2(this.speciesDNA);
+//       let oldDnaBase = this.speciesDNA[idx];
+//       let newBase = returnRandBase()
+//       while (newBase === oldDnaBase) {
+//         newBase === returnRandBase()
+//       }
+//       this.speciesDNA[idx] = newBase;
+//       return this.speciesDNA;
+//     }
+//   }
+// }
+
+
+
+
+function pAequorFactory(speciesNum, speciesDNA) {
+  return {
+    speciesNum: speciesNum,
+    speciesDNA: speciesDNA,
+    mutate () {
+      if (this.speciesDNA[returnRandBase2(this.speciesDNA)].toString() !== returnRandBase()) {
+      this.speciesDNA[returnRandBase2(this.speciesDNA)] = returnRandBase();
+      return this.speciesDNA;
+      } else {
+        return 
+      }
+    },
+    compareDNA (speciesDNA, speciesNum) {
+      let totalMatches = 0;
+      for (let i = 0; i <this.speciesDNA.length; i++) {
+           if (this.speciesDNA[i] === speciesDNA[i]) {
+             totalMatches++;
+         }
+         finalPercentage = (totalMatches / this.speciesDNA.length) * 100;
+      };
+      console.log(`Specimen ${this.speciesNum} and Specimen ${speciesNum} have ${finalPercentage.toFixed(1)} of DNA in common.`)
+    },
+    willLikelySurvive () {
+      let goodDNA = 0;
+      for (let i = 0; i <this.speciesDNA.length; i++) {
+           if (this.speciesDNA[i] === 'C' || this.speciesDNA[i] === 'G') {
+             goodDNA++;
+    }
+  };
+  let survivalRate = (goodDNA / this.speciesDNA.length) * 100;
+  if (survivalRate >= 0.6) {
+    return true;
+  } else {
+    return false;
+  };
+}
+  }
+};
+
+let ex1 = pAequorFactory(1, mockUpStrand());
+let ex2 = pAequorFactory(2, mockUpStrand());
+let ex3 = pAequorFactory(3, mockUpStrand());
+let ex4 = pAequorFactory(4, mockUpStrand());
+let ex5 = pAequorFactory(5, mockUpStrand());
+let ex6 = pAequorFactory(6, mockUpStrand());
+let ex7 = pAequorFactory(7, mockUpStrand());
+let ex8 = pAequorFactory(8, mockUpStrand());
+let ex9 = pAequorFactory(9, mockUpStrand());
+let ex10 = pAequorFactory(10, mockUpStrand());
+let ex11 = pAequorFactory(11, mockUpStrand());
+let ex12 = pAequorFactory(12, mockUpStrand());
+let ex13 = pAequorFactory(13, mockUpStrand());
+let ex14 = pAequorFactory(14, mockUpStrand());
+let ex15 = pAequorFactory(15, mockUpStrand());
+let ex16 = pAequorFactory(16, mockUpStrand());
+let ex17 = pAequorFactory(17, mockUpStrand());
+let ex18 = pAequorFactory(18, mockUpStrand());
+let ex19 = pAequorFactory(19, mockUpStrand());
+let ex20 = pAequorFactory(20, mockUpStrand());
+let ex21 = pAequorFactory(21, mockUpStrand());
+let ex22 = pAequorFactory(22, mockUpStrand());
+let ex23 = pAequorFactory(23, mockUpStrand());
+let ex24 = pAequorFactory(24, mockUpStrand());
+let ex25 = pAequorFactory(25, mockUpStrand());
+let ex26 = pAequorFactory(26, mockUpStrand());
+let ex27 = pAequorFactory(27, mockUpStrand());
+let ex28 = pAequorFactory(28, mockUpStrand());
+let ex29 = pAequorFactory(29, mockUpStrand());
+let ex30 = pAequorFactory(30, mockUpStrand());
+
+let checkList = [ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8, ex9, ex10, ex11, ex12, ex13, ex14, ex15, ex16, ex17, ex18, ex19, ex20, ex21, ex22, ex23, ex24, ex25, ex26, ex27, ex28, ex29, ex30];
+
+const SurvivorsList = (arr) => {
+  let survivors = [];
+ arr.forEach(element => {
+   if (element.willLikelySurvive() === true) {
+     survivors.push(element);
+   }
+ });
+ return survivors;
+}
+
+
+
+
+// console.log(wawa2)
+let pAequor1 = pAequorFactory(1, mockUpStrand());
+let pAequor2 = pAequorFactory(6, wawa2);
+
+pAequor1.compareDNA(pAequor2.speciesDNA, pAequor2.speciesNum);
+console.log(pAequor2.willLikelySurvive());
